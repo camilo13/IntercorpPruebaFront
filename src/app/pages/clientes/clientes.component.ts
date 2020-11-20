@@ -24,6 +24,7 @@ export class ClientesComponent implements OnInit {
         this.clientes = resp;
         this.promEdades(this.clientes);
         this.desvEstandar(this.clientes);
+        this.calcFechaMuerteProbable(this.clientes);
       });
   }
 
@@ -57,5 +58,13 @@ export class ClientesComponent implements OnInit {
     this.desviacion = Math.sqrt(sumatoria / clientes.length);
   }
 
-
+  calcFechaMuerteProbable(clientes: ClienteModel[]){
+    let edadProbableMuerte = this.promedio + this.desviacion;
+    let edadProbableEnMili = edadProbableMuerte*365.25*24*60*60*1000
+    clientes.forEach(val => {
+      let fecha = new Date(val.fecha_nacimiento).getTime();
+      fecha += edadProbableEnMili;
+      val.fecha_muerte = new Date(fecha).toISOString().split('T')[0];
+    });
+  }
 }

@@ -5,7 +5,7 @@ export class ClienteModel {
   lastname: string;
   age: number;
   fecha_nacimiento: string;
-  
+  fecha_muerte: string;
 
   constructor() {
 
